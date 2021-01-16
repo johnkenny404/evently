@@ -12,6 +12,12 @@ class EventController extends Controller
         return view('dashboard')->with('events' , $events);
     }
 
+    public function welcome(){
+        $events = Event::all();
+        return view('welcome')->with('events', $events);
+    }
+
+
 
     public function addEvent(){
         return view('add_event'); 
@@ -54,4 +60,33 @@ class EventController extends Controller
 
         return view('event_detail')->with('event', $event);
     }
+
+
+
+    public function search(Request $request){
+        $search = $request->input('search');
+        $events = Event::query()
+        ->where('name', 'LIKE', "%{$search}%")
+        ->orWhere('type', 'LIKE', "%{$search}%")
+        ->orWhere('state', 'LIKE', "%{$search}%")
+        ->get();
+        return view('welcome', compact('events'));
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

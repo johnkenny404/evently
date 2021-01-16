@@ -13,14 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('guest');
+Route::get('/', 'EventController@welcome')->name('event.welcome')->middleware('guest');
 
 Route::get('/add-event',  'EventController@addEvent')->middleware('auth')->name('event.add');
 Route::get('/event/{id}/detail', 'EventController@eventDetail')->middleware('auth')->name('event.detail');
 Route::post('/create-event', 'EventController@createEvent')->middleware('auth')->name('event.create');
-
+Route::get('/search', 'EventController@search')->name('event.search');
 Route::get('/dashboard', 'EventController@home')->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
